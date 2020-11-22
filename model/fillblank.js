@@ -4,7 +4,12 @@ class FillBlank extends Question {
     }
 
     checkExact() {
-
+        //lấy value của input
+        var value = document.getElementById(`fill-in-blank-${this.id}`).value;
+        if (this.answers[0].content === value) {
+            return true;
+        }
+        return false;
     }
 
     render() {

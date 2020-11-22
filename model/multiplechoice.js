@@ -4,7 +4,16 @@ class MultipleChoice extends Question {
     }
 
     checkExact() {
-
+        //lấy danh sách câu trả lời
+        let checked = false;
+        var answerList = document.getElementsByName(`${this.id}`);
+        answerList.forEach(answer => {
+            if (answer.checked && answer.value === "true") {
+                checked = true;
+                break;
+            }
+        });
+        return checked;
     }
 
     render() {
@@ -14,7 +23,7 @@ class MultipleChoice extends Question {
         for (var i = 0; i < this.answers.length; i++) {
             answerHTML += `
             <div>
-            <input type="radio" name="${this.id}" />
+            <input type="radio" name="${this.id}" value="${this.answers[i].exact}" />
             <label>${this.answers[i].content}</label>    
             </div>
            `

@@ -6,15 +6,14 @@ tasks:
     2. render danh sách câu hỏi ra màn hình
     3. Tính điểm và show kết quả
 */
-
+var questionList;
 var fetchQuestion = function () {
     axios({
         url: "https://5bd2959ac8f9e400130cb7e9.mockapi.io/api/questions",
         method: "GET",
     })
         .then(function (res) {
-            console.log(res);
-            var questionList = mapData(res.data);
+            questionList = mapData(res.data);
             renderQuestions(questionList);
         })
         .catch(function (err) {
@@ -35,7 +34,6 @@ var renderQuestions = function (questionList) {
 // Nhận ds câu hỏi từ backend và chuyển thành của mình
 var mapData = function (dataFromDB) {
     var mappedData = [];
-
     for (var i = 0; i < dataFromDB.length; i++) {
         var cQuestion = dataFromDB[i];
         // kiểm tra loại câu hỏi để dùng lớp đối tượng tương ứng
@@ -53,3 +51,16 @@ var mapData = function (dataFromDB) {
 // expression function
 // const a = function(){};
 
+document.querySelector('#handleResult').onclick = function () {
+    let myScore = 0;
+    //duyệt qua từng câu hỏi và kiểm tra
+    //nếu đúng thì tăng myS lên 1
+    //sai thì thôi
+    questionList.forEach(question => {
+        console.log('question', question);
+        if (question.checkExact()) {
+            myScore++;
+        }
+    });
+    alert(`số câu đúng là : ${myScore}`);
+}
